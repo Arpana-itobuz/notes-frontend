@@ -29,23 +29,22 @@ plusButton.addEventListener("click", () => {
 checkButton.addEventListener("click", () => {
   textArea.classList.add("d-none");
   checkButton.classList.add("d-none");
-  content.innerHTML += `<i class="fa-sharp fa-solid fa-trash bg-white position-absolute end-0 me-4 mt-2 p-1 rounded-circle delete-button"></i><div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">${textArea.value}</div>`;
-
-  async function sendData(data) {
-    const myData = await fetch("http://127.0.0.1:5000/", {
-      method: "POST",
-      body: JSON.stringify({ name: data[0] }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-  }
-
   let notes = [];
   notes.push(textArea.value);
-  // receiveData();
   sendData(notes);
+  content.innerHTML = "";
+  receiveData();
 });
+
+async function sendData(data) {
+  const myData = await fetch("http://127.0.0.1:5000/", {
+    method: "POST",
+    body: JSON.stringify({ name: data[0] }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
+}
 
 async function receiveData() {
   const data = await fetch(`http://127.0.0.1:5000/`)
@@ -85,6 +84,7 @@ async function receiveData() {
       console.log("this is deleted");
       deleteData(data.data._id);
       content.innerHTML = "";
+      
       receiveData();
     })
   );
