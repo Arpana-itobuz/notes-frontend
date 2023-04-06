@@ -21,7 +21,6 @@ crossButton.addEventListener("click", () => {
 });
 
 plusButton.addEventListener("click", () => {
-  // content.innerHTML += `<div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">hii</div>`;
   textArea.classList.remove("d-none");
   checkButton.classList.remove("d-none");
   textArea.value = "";
@@ -30,54 +29,81 @@ plusButton.addEventListener("click", () => {
 checkButton.addEventListener("click", () => {
   textArea.classList.add("d-none");
   checkButton.classList.add("d-none");
-  content.innerHTML += `<div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">${textArea.value}</div>`;
-  // console.log(textArea.value);
+  content.innerHTML += `<i class="fa-sharp fa-solid fa-trash bg-white position-absolute end-0 me-4 mt-2 p-1 rounded-circle delete-button"></i><div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">${textArea.value}</div>`;
 
   async function sendData(data) {
     const myData = await fetch("http://127.0.0.1:5000/", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ name: data[0] }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    // console.log(myData);
   }
 
   let notes = [];
   notes.push(textArea.value);
-  // console.log(notes);
+  // receiveData();
   sendData(notes);
+});
 
-  async function receiveData() {
-    const data = await fetch(`http://127.0.0.1:5000/`)
-      .then((data) => {
-        return data.json();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(data);
-    console.log(data.data);
-    content.addEventListener("click", () => {
-      textArea.classList.remove("d-none");
-      checkButton.classList.remove("d-none");
-      content.innerHTML = `<div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
-      ${data.data}
-      </div>`;
+async function receiveData() {
+  const data = await fetch(`http://127.0.0.1:5000/`)
+    .then((data) => {
+      return data.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  console.log(data);
+
+  for (let i = 0; i < data.data.length; i++) {
+    findButton.addEventListener("click", () => {
+      if (inputBox.value === data.data[i].name) {
+        content.innerHTML = `<div class="w-100 bg-white">
+        <div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
+        ${data.data[i].name}
+        </div>
+        </div>`;
+      } else {
+        alert("No such note found!!");
+      }
     });
   }
 
-  receiveData();
+  for (let i = 0; i < data.data.length; i++) {
+    content.innerHTML += `<i class="fa-sharp fa-solid fa-trash bg-white position-absolute end-0 me-4 mt-2 p-1 rounded-circle delete-button" id=${data.data[i]._id} ></i><div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
+    ${data.data[i].name}
+    </div>`;
+    console.log(data.data[i].name);
+  }
 
-  findButton.addEventListener("click", () => {
-    if (inputBox.value === notes[0]) {
-      console.log(notes);
-      content.innerHTML = `<div class="w-100 bg-white">
-      <div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
-      ${notes}
-      </div>
-      </div>`;
-    }
-  });
-});
+  const deleteButton = document.querySelectorAll(".delete-button");
+  deleteButton.forEach((e) =>
+    e.addEventListener("click", () => {
+      console.log("this is deleted");
+      deleteData(data.data._id);
+      content.innerHTML = "";
+      receiveData();
+    })
+  );
+}
+
+receiveData();
+
+async function deleteData(myId) {
+  const deleteData = await fetch(`http://127.0.0.1:5000/`, {
+    method: "DELETE",
+    body: JSON.stringify({ id: myId }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((data) => {
+      return data.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

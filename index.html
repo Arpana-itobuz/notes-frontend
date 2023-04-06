@@ -15,7 +15,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <nav class="container-fluid mt-2">
@@ -27,28 +27,48 @@
         <i class="fas fa-solid fa-ellipsis-vertical col-1"></i>
       </div>
       <div class="row mt-2 ms-2">
-        <input type="text" class="col-8 col-md-9 d-none" placeholder="Search here..." id="input-box"/>
-        <i class="fas fa-duotone fa-check col-1 col-md-1 p-2 m-2 ms-5 d-none find-button"></i>
-        <p class="col-1 col-md-1 d-none mt-2 text-warning" id="cross-button">Cancel</p>
+        <input
+          type="text"
+          class="col-8 col-md-9 d-none"
+          placeholder="Search here..."
+          id="input-box"
+        />
+        <i
+          class="fas fa-duotone fa-check col-1 col-md-1 p-2 m-2 ms-5 d-none find-button"
+        ></i>
+        <p class="col-1 col-md-1 d-none mt-2 text-warning" id="cross-button">
+          Cancel
+        </p>
       </div>
     </nav>
     <header class="ps-3">
       <h1>All Notes</h1>
-      <p><span class="notes-count">0 </span>notes</p>
     </header>
-    <section class="overflow-y-scroll position-relative px-3" style="height: 80vh">
+    <section
+      class="overflow-y-scroll position-relative px-3"
+      style="height: 80vh"
+    >
       <div class="content"></div>
-      
-      <button class="btn rounded-circle bg-warning position-fixed bottom-0 end-0 plus-button m-3">
+
+      <button
+        class="btn rounded-circle bg-warning position-fixed bottom-0 end-0 plus-button m-3"
+      >
         <i class="fas fa-duotone fa-plus"></i>
       </button>
     </section>
-    <section >
-      
-      <textarea name="" id="" cols="30" rows="10" class="text-area w-100 position-absolute top-0 bg-black d-none btn text-start text-white" style="height: 90vh" >
-        
+    <section>
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        class="text-area w-100 position-absolute top-0 bg-black d-none btn text-start text-white"
+        style="height: 90vh"
+      >
       </textarea>
-      <i class="fas fa-duotone fa-check d-none check-button position-absolute top-0 end-0 bg-white p-2 m-2 rounded-circle"></i>
+      <i
+        class="fas fa-duotone fa-check d-none check-button position-absolute top-0 end-0 bg-white p-2 m-2 rounded-circle"
+      ></i>
     </section>
     <script src="./js/script.js"></script>
   </body>
