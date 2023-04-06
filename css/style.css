@@ -1,4 +1,45 @@
 .notes-area:hover {
-  background-color: olivedrab !important;
+  background-color: #023e8a !important;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8) !important;
+  color: #ade8f4;
+  transition: 0.8s;
+}
+
+.notes-area {
+  background-color: #00b4d8 !important;
+  font-size: larger;
+}
+
+.pop-up,
+.pop-up-delete {
+  background-color:#023e8a;
+  color:#ade8f4;
+  animation: hideAnimation 0s ease-in 1s !important;
+  animation-fill-mode: forwards !important;
+}
+
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+body {
+  background-color: #ade8f4;
+}
+
+.all-notes  {
+    color: #023e8a;
+}
+
+.main-button {
+    background-color: #023e8a;
+    color: white;
+}
+
+.main-button:hover {
+    background-color: #00b4d8;
+    color: #023e8a;
 }
