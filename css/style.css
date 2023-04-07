@@ -3,14 +3,15 @@ body {
   background-color: #ade8f4;
 }
 
-.notes-area:hover {
+.notes-box:hover {
   background-color: #023e8a !important;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8) !important;
   color: #ade8f4;
   transition: 0.8s;
+  cursor: pointer;
 }
 
-.notes-area {
+.notes-box {
   background-color: #00b4d8 !important;
   font-size: larger;
 }
@@ -35,6 +36,7 @@ body {
 .main-button {
   background-color: #023e8a;
   color: #ade8f4;
+  cursor: pointer;
 }
 
 .main-button:hover {
@@ -45,11 +47,17 @@ body {
 .write {
   background-color: #023e8a !important;
   color: #ade8f4 !important;
+  cursor: pointer;
 }
 
 .add {
   background-color: #ade8f4 !important;
   color: #023e8a !important;
+  cursor: pointer;
+}
+
+.fas {
+  cursor: pointer;
 }
 
 .dropdown-menu {

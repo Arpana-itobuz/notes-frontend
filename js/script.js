@@ -124,20 +124,11 @@ async function receiveData() {
   for (let i = 0; i < data.data.length; i++) {
     content.innerHTML += `<i class="fa-sharp fa-solid fa-trash main-button position-absolute end-0 me-4 mt-2 p-2 rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' ></i>
     <i class="fas fa-solid fa-pen-nib position-absolute end-0 me-4 mt-5 main-button p-2 rounded-circle update-button" ></i>
-    <div class="notes-area  all-notes w-100 py-5 my-3 p-2 " contenteditable="true" >
+    <div class="notes-area notes-box all-notes w-100 py-5 my-3 p-2 cursor-pointer" contenteditable="true" >
     ${data.data[i].name}
     </div>`;
   }
-
-  const deleteButton = document.querySelectorAll(".delete-button");
-
-  deleteButton.forEach(
-    (e) =>
-      e.addEventListener("click", () => {
-        popUpDelete.classList.remove("d-none");
-      }),
-    popUpDelete.classList.add("d-none")
-  );
+  popUpDelete.classList.add("d-none");
 
   const noteArea = document.querySelectorAll(".notes-area");
   noteArea.forEach((e) => {
@@ -163,25 +154,32 @@ async function receiveData() {
 }
 
 let responseData = receiveData();
+popUpDelete.classList.add("d-none");
 
 async function deleteData(myId) {
-  const deleteData = await fetch(`http://127.0.0.1:5000/`, {
-    method: "DELETE",
-    body: JSON.stringify({ id: myId }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((data) => {
-      content.innerHTML = "";
-
-      receiveData();
-      return data.json();
+  let confirming = confirm("Are You Sure ?");
+  if (confirming === false) {
+    console.log("hii");
+  } else {
+    popUpDelete.classList.remove("d-none");
+    const deleteData = await fetch(`http://127.0.0.1:5000/`, {
+      method: "DELETE",
+      body: JSON.stringify({ id: myId }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
-  console.log(deleteData);
+      .then((data) => {
+        content.innerHTML = "";
+
+        receiveData();
+        return data.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(deleteData);
+  }
 }
 
 async function updateData(value1, value2) {
