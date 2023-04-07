@@ -2,16 +2,42 @@ const searchButton = document.querySelector("#search-button");
 const findButton = document.querySelector(".find-button");
 const inputBox = document.querySelector("#input-box");
 const crossButton = document.querySelector("#cross-button");
-const notesCount = document.querySelector("#notes-count");
+const notesCount = document.querySelector(".notes-count");
 const plusButton = document.querySelector(".plus-button");
 const content = document.querySelector(".content");
 const textArea = document.querySelector(".text-area");
 const checkButton = document.querySelector(".check-button");
 const popUp = document.querySelector(".pop-up");
 const popUpDelete = document.querySelector(".pop-up-delete");
+const popUpUpdate = document.querySelector(".pop-up-update");
 const rejectButton = document.querySelector(".reject-button");
+const darkTheme = document.querySelector(".dark");
+const lightTheme = document.querySelector(".light");
+const colorTheme = document.querySelector(".color");
+const body = document.querySelector(".body");
 
-// const allNotes = [];
+darkTheme.addEventListener("click", () => {
+  body.classList.add("dark-theme");
+  body.classList.remove("light-theme");
+  textArea.classList.add("dark-theme");
+  textArea.classList.remove("write");
+});
+
+lightTheme.addEventListener("click", () => {
+  body.classList.remove("dark-theme");
+  body.classList.add("light-theme");
+  textArea.classList.add("light-theme");
+  textArea.classList.remove("dark-theme");
+  textArea.classList.remove("write");
+});
+
+colorTheme.addEventListener("click", () => {
+  body.classList.remove("dark-theme");
+  body.classList.remove("light-theme");
+  textArea.classList.remove("dark-theme");
+  textArea.classList.remove("light-theme");
+  textArea.classList.add("write");
+});
 
 searchButton.addEventListener("click", () => {
   inputBox.classList.toggle("d-none");
@@ -31,6 +57,7 @@ plusButton.addEventListener("click", () => {
   textArea.classList.remove("d-none");
   checkButton.classList.remove("d-none");
   textArea.value = "";
+  popUp.classList.add("d-none");
 });
 
 rejectButton.addEventListener("click", () => {
@@ -44,9 +71,10 @@ checkButton.addEventListener("click", () => {
   popUp.classList.remove("d-none");
   textArea.classList.add("d-none");
   checkButton.classList.add("d-none");
-  plusButton.classList.remove("d-none")
-  rejectButton.classList.add("d-none")
+  plusButton.classList.remove("d-none");
+  rejectButton.classList.add("d-none");
   let notes = [];
+
   notes.push(textArea.value);
   sendData(notes);
   content.innerHTML = "";
@@ -72,63 +100,71 @@ async function receiveData() {
       console.log(err);
     });
 
+  let allArray = [];
+  allArray.push(data.data);
 
-  // console.log(data);
+  let newArray = [];
+  for (let i = 0; i < data.data.length; i++) {
+    newArray.push(allArray[0][i].name);
+  }
 
-  // const result = data.data.filter((element) => {
-  //   if (inputBox.value === element.name) {
-  //     return element;
-  //   }
-  // });
+  findButton.addEventListener("click", () => {
+    const found = newArray.find((element) => element === inputBox.value);
+    if (inputBox.value === found) {
+      alert("One Such note found ...");
+      inputBox.value = "";
+    } else {
+      alert("No such note found !!");
+      inputBox.value = "";
+    }
+  });
 
-  // console.log("search resilt", result);
-
-  // for (let i = 0; i < data.data.length; i++) {
-  //   findButton.addEventListener("click", () => {
-  //     // console.log(data.data[i].name);
-  //     if (inputBox.value === data.data[i].name) {
-  //       content.innerHTML = `<div class="w-100 bg-white">
-  //       <div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
-  //       ${data.data[i].name}
-  //       </div>
-  //       </div>`;
-  //     } else {
-  //       alert("No such note found!!");
-  //     }
-  //   });
-  // }
+  notesCount.innerHTML = data.data.length;
 
   for (let i = 0; i < data.data.length; i++) {
-    content.innerHTML += `<i class="fa-sharp fa-solid fa-trash bg-white position-absolute end-0 me-4 mt-5 p-2 rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' ></i><div class="notes-area bg-black text-white w-100 py-5 my-3 p-2">
+    content.innerHTML += `<i class="fa-sharp fa-solid fa-trash main-button position-absolute end-0 me-4 mt-2 p-2 rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' ></i>
+    <i class="fas fa-solid fa-pen-nib position-absolute end-0 me-4 mt-5 main-button p-2 rounded-circle update-button" ></i>
+    <div class="notes-area  all-notes w-100 py-5 my-3 p-2 " contenteditable="true" >
     ${data.data[i].name}
     </div>`;
-    console.log(data.data[i].name);
   }
 
   const deleteButton = document.querySelectorAll(".delete-button");
 
-  deleteButton.forEach((e) =>
-    e.addEventListener("click", () => {
-      // deleteButton.style.backgroundColor = "red";
-      popUpDelete.classList.remove("d-none");
-    })
+  deleteButton.forEach(
+    (e) =>
+      e.addEventListener("click", () => {
+        popUpDelete.classList.remove("d-none");
+      }),
+    popUpDelete.classList.add("d-none")
   );
 
-  // updateButton.forEach((e) =>
-  //   e.addEventListener("click", () => {
-  //     updateButton.style.backgroundColor = "red";
+  const noteArea = document.querySelectorAll(".notes-area");
+  noteArea.forEach((e) => {
+    e.addEventListener("click", () => {
+      e.style.height = "30vh";
+    });
+  });
 
-  //   })
-  // );
+  const updateButton = document.querySelectorAll(".update-button");
+
+  updateButton.forEach((e) => {
+    let text = e.nextElementSibling.textContent;
+    e.addEventListener("click", () => {
+      console.log(text);
+
+      popUpUpdate.classList.remove("d-none");
+      console.log(e.nextElementSibling.textContent);
+      updateData(text, e.nextElementSibling.textContent);
+    });
+    popUpUpdate.classList.add("d-none");
+  });
   return data;
 }
 
 let responseData = receiveData();
-// allNotes.push(receiveData());
 
 async function deleteData(myId) {
-  console.log(myId);
-  // let myId = Id.toString();
   const deleteData = await fetch(`http://127.0.0.1:5000/`, {
     method: "DELETE",
     body: JSON.stringify({ id: myId }),
@@ -148,4 +184,20 @@ async function deleteData(myId) {
   console.log(deleteData);
 }
 
-// content.addEventListener();
+async function updateData(value1, value2) {
+  const updateData = await fetch(`http://127.0.0.1:5000/`, {
+    method: "PUT",
+    body: JSON.stringify([{ name: value1.trim() }, { name: value2.trim() }]),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((data) => {
+      content.innerHTML = "";
+      receiveData();
+      return data.json();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

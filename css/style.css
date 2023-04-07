@@ -1,3 +1,8 @@
+body {
+  color: #023e8a;
+  background-color: #ade8f4;
+}
+
 .notes-area:hover {
   background-color: #023e8a !important;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8) !important;
@@ -11,9 +16,10 @@
 }
 
 .pop-up,
-.pop-up-delete {
-  background-color:#023e8a;
-  color:#ade8f4;
+.pop-up-delete,
+.pop-up-update {
+  background-color: #023e8a;
+  color: #ade8f4;
   animation: hideAnimation 0s ease-in 1s !important;
   animation-fill-mode: forwards !important;
 }
@@ -26,20 +32,37 @@
   }
 }
 
-body {
-  background-color: #ade8f4;
-}
-
-.all-notes  {
-    color: #023e8a;
-}
-
 .main-button {
-    background-color: #023e8a;
-    color: white;
+  background-color: #023e8a;
+  color: #ade8f4;
 }
 
 .main-button:hover {
-    background-color: #00b4d8;
-    color: #023e8a;
+  background-color: #00b4d8;
+  color: #023e8a;
+}
+
+.write {
+  background-color: #023e8a !important;
+  color: #ade8f4 !important;
+}
+
+.add {
+  background-color: #ade8f4 !important;
+  color: #023e8a !important;
+}
+
+.dropdown-menu {
+  width: 5rem;
+  margin-right: 1rem !important;
+}
+
+.dark-theme {
+  background-color: black !important;
+  color: white !important;
+}
+
+.light-theme {
+  background-color: white !important;
+  color: black !important;
 }
