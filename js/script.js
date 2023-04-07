@@ -128,7 +128,7 @@ async function receiveData() {
     ${data.data[i].name}
     </div>`;
   }
-  popUpDelete.classList.add("d-none");
+  // popUpDelete.classList.add("d-none");
 
   const noteArea = document.querySelectorAll(".notes-area");
   noteArea.forEach((e) => {
@@ -144,19 +144,26 @@ async function receiveData() {
     e.addEventListener("click", () => {
       console.log(text);
 
-      popUpUpdate.classList.remove("d-none");
+      // setTimeout(() => {
+        popUpUpdate.classList.remove("d-none");
+      // }, 2000);
       console.log(e.nextElementSibling.textContent);
       updateData(text, e.nextElementSibling.textContent);
     });
-    popUpUpdate.classList.add("d-none");
+    setTimeout(() => {
+      popUpUpdate.classList.add("d-none");
+    }, 2000);
   });
   return data;
 }
 
 let responseData = receiveData();
-popUpDelete.classList.add("d-none");
+// popUpDelete.classList.add("d-none");
 
 async function deleteData(myId) {
+  setTimeout(() => {
+    popUpDelete.classList.add("d-none");
+  }, 2000);
   let confirming = confirm("Are You Sure ?");
   if (confirming === false) {
     console.log("hii");
@@ -183,6 +190,7 @@ async function deleteData(myId) {
 }
 
 async function updateData(value1, value2) {
+  
   const updateData = await fetch(`http://127.0.0.1:5000/`, {
     method: "PUT",
     body: JSON.stringify([{ name: value1.trim() }, { name: value2.trim() }]),

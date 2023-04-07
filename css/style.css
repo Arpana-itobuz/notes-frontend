@@ -48,6 +48,7 @@ body {
   background-color: #023e8a !important;
   color: #ade8f4 !important;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
 
 .add {
@@ -74,3 +75,6 @@ body {
   background-color: white !important;
   color: black !important;
 }
+
+
+
