@@ -1,3 +1,8 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   color: #023e8a;
   background-color: #ade8f4;
@@ -14,6 +19,32 @@ body {
 .notes-box {
   background-color: #00b4d8 !important;
   font-size: larger;
+}
+
+.dark-notes {
+  background-color: #272828 !important;
+  font-size: larger;
+}
+
+.dark-notes:hover {
+  background-color: #01060c !important;
+  box-shadow: 0 0 10px rgba(141, 138, 138, 0.8) !important;
+  color: #ffffff;
+  transition: 0.8s;
+  cursor: pointer;
+}
+
+.light-notes {
+  background-color: #989f9f !important;
+  font-size: larger;
+}
+
+.light-notes:hover {
+  background-color: #01060c !important;
+  box-shadow: 0 0 10px rgba(141, 138, 138, 0.8) !important;
+  color: #ffffff;
+  transition: 0.8s;
+  cursor: pointer;
 }
 
 .pop-up,
@@ -49,12 +80,14 @@ body {
   color: #ade8f4 !important;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  z-index: 10;
 }
 
 .add {
   background-color: #ade8f4 !important;
   color: #023e8a !important;
   cursor: pointer;
+  z-index: 10;
 }
 
 .fas {
@@ -75,6 +108,7 @@ body {
   background-color: white !important;
   color: black !important;
 }
+
 
 
 

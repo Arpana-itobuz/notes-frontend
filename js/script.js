@@ -16,29 +16,6 @@ const lightTheme = document.querySelector(".light");
 const colorTheme = document.querySelector(".color");
 const body = document.querySelector(".body");
 
-darkTheme.addEventListener("click", () => {
-  body.classList.add("dark-theme");
-  body.classList.remove("light-theme");
-  textArea.classList.add("dark-theme");
-  textArea.classList.remove("write");
-});
-
-lightTheme.addEventListener("click", () => {
-  body.classList.remove("dark-theme");
-  body.classList.add("light-theme");
-  textArea.classList.add("light-theme");
-  textArea.classList.remove("dark-theme");
-  textArea.classList.remove("write");
-});
-
-colorTheme.addEventListener("click", () => {
-  body.classList.remove("dark-theme");
-  body.classList.remove("light-theme");
-  textArea.classList.remove("dark-theme");
-  textArea.classList.remove("light-theme");
-  textArea.classList.add("write");
-});
-
 searchButton.addEventListener("click", () => {
   inputBox.classList.toggle("d-none");
   crossButton.classList.toggle("d-none");
@@ -77,6 +54,7 @@ checkButton.addEventListener("click", () => {
 
   notes.push(textArea.value);
   sendData(notes);
+  console.log(notes);
   content.innerHTML = "";
   receiveData();
 });
@@ -89,6 +67,7 @@ async function sendData(data) {
       "Content-type": "application/json; charset=UTF-8",
     },
   });
+  console.log(myData);
 }
 
 async function receiveData() {
@@ -122,18 +101,96 @@ async function receiveData() {
   notesCount.innerHTML = data.data.length;
 
   for (let i = 0; i < data.data.length; i++) {
-    content.innerHTML += `<i class="fa-sharp fa-solid fa-trash main-button position-absolute end-0 me-4 mt-2 p-2 rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' ></i>
-    <i class="fas fa-solid fa-pen-nib position-absolute end-0 me-4 mt-5 main-button p-2 rounded-circle update-button" ></i>
-    <div class="notes-area notes-box all-notes w-100 py-5 my-3 p-2 cursor-pointer" contenteditable="true" >
+    content.innerHTML += `<i class="fa-sharp fa-solid fa-trash main-button me-me-0 me-2 p-2 position-absolute rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' style="right:4%; margin-top:1rem; z-index:2;"></i>
+    <i class="fas fa-solid fa-pen-nib main-button p-2 me-me-0 me-2 rounded-circle update-button position-absolute " style="right:4%; margin-top:5rem; z-index:2;" ></i>
+    <div class="rounded p-3 notes-area notes-box all-notes w-100 py-5 my-3  cursor-pointer position-relative " contenteditable="true" >
     ${data.data[i].name}
     </div>`;
   }
   // popUpDelete.classList.add("d-none");
+  const deleteButton = document.querySelectorAll(".delete-button");
 
   const noteArea = document.querySelectorAll(".notes-area");
   noteArea.forEach((e) => {
     e.addEventListener("click", () => {
       e.style.height = "30vh";
+    });
+  });
+
+  darkTheme.addEventListener("click", () => {
+    body.classList.add("dark-theme");
+    body.classList.remove("light-theme");
+    textArea.classList.add("dark-theme");
+    textArea.classList.remove("write");
+    rejectButton.classList.remove("main-button");
+    plusButton.classList.remove("main-button");
+    rejectButton.classList.add("light-theme");
+    plusButton.classList.add("light-theme");
+    checkButton.classList.remove("add");
+    checkButton.classList.add("light-theme");
+    noteArea.forEach((e) => {
+      e.classList.remove("notes-box");
+      e.classList.add("dark-notes");
+    });
+    deleteButton.forEach((e) => {
+      e.classList.remove("main-button");
+      e.classList.add("light-theme");
+    });
+    updateButton.forEach((e) => {
+      e.classList.remove("main-button");
+      e.classList.add("light-theme");
+    });
+  });
+
+  lightTheme.addEventListener("click", () => {
+    body.classList.remove("dark-theme");
+    body.classList.add("light-theme");
+    textArea.classList.add("light-theme");
+    textArea.classList.remove("dark-theme");
+    textArea.classList.remove("write");
+    rejectButton.classList.remove("main-button");
+    plusButton.classList.remove("main-button");
+    rejectButton.classList.remove("light-theme");
+    plusButton.classList.remove("light-theme");
+    rejectButton.classList.add("dark-theme");
+    plusButton.classList.add("dark-theme");
+    noteArea.forEach((e) => {
+      e.classList.remove("notes-box");
+      e.classList.add("light-notes");
+    });
+    deleteButton.forEach((e) => {
+      e.classList.remove("main-button");
+      e.classList.add("dark-theme");
+    });
+    updateButton.forEach((e) => {
+      e.classList.remove("main-button");
+      e.classList.add("dark-theme");
+    });
+  });
+
+  colorTheme.addEventListener("click", () => {
+    body.classList.remove("dark-theme");
+    body.classList.remove("light-theme");
+    textArea.classList.remove("dark-theme");
+    textArea.classList.remove("light-theme");
+    textArea.classList.add("write");
+    rejectButton.classList.add("main-button");
+    plusButton.classList.add("main-button");
+    rejectButton.classList.remove("dark-theme");
+    plusButton.classList.remove("dark-theme");
+    rejectButton.classList.remove("light-theme");
+    plusButton.classList.remove("light-theme");
+    noteArea.forEach((e) => {
+      e.classList.remove("dark-notes");
+      e.classList.add("notes-box");
+    });
+    deleteButton.forEach((e) => {
+      e.classList.remove("light-theme");
+      e.classList.add("main-button");
+    });
+    updateButton.forEach((e) => {
+      e.classList.remove("light-theme");
+      e.classList.add("main-button");
     });
   });
 
@@ -145,7 +202,7 @@ async function receiveData() {
       console.log(text);
 
       // setTimeout(() => {
-        popUpUpdate.classList.remove("d-none");
+      popUpUpdate.classList.remove("d-none");
       // }, 2000);
       console.log(e.nextElementSibling.textContent);
       updateData(text, e.nextElementSibling.textContent);
@@ -190,7 +247,6 @@ async function deleteData(myId) {
 }
 
 async function updateData(value1, value2) {
-  
   const updateData = await fetch(`http://127.0.0.1:5000/`, {
     method: "PUT",
     body: JSON.stringify([{ name: value1.trim() }, { name: value2.trim() }]),
