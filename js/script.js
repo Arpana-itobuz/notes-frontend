@@ -121,6 +121,8 @@ async function receiveData() {
     body.classList.add("dark-theme");
     body.classList.remove("light-theme");
     textArea.classList.add("dark-theme");
+    textArea.style.zIndex = "2";
+    checkButton.style.zIndex = "2";
     textArea.classList.remove("write");
     rejectButton.classList.remove("main-button");
     plusButton.classList.remove("main-button");
@@ -154,6 +156,11 @@ async function receiveData() {
     plusButton.classList.remove("light-theme");
     rejectButton.classList.add("dark-theme");
     plusButton.classList.add("dark-theme");
+    checkButton.classList.remove("add");
+    textArea.style.zIndex = "2";
+    checkButton.style.zIndex = "2";
+    checkButton.classList.remove("light-theme");
+    checkButton.classList.add("dark-theme");
     noteArea.forEach((e) => {
       e.classList.remove("notes-box");
       e.classList.add("light-notes");
@@ -182,14 +189,17 @@ async function receiveData() {
     plusButton.classList.remove("light-theme");
     noteArea.forEach((e) => {
       e.classList.remove("dark-notes");
+      e.classList.remove("light-notes");
       e.classList.add("notes-box");
     });
     deleteButton.forEach((e) => {
       e.classList.remove("light-theme");
+      e.classList.remove("dark-theme");
       e.classList.add("main-button");
     });
     updateButton.forEach((e) => {
       e.classList.remove("light-theme");
+      e.classList.remove("dark-theme");
       e.classList.add("main-button");
     });
   });
