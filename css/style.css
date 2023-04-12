@@ -76,7 +76,7 @@ body {
   color: #023e8a;
 }
 
-.write {
+.notes-box-notes {
   background-color: #023e8a !important;
   color: #ade8f4 !important;
   cursor: pointer;
@@ -84,7 +84,7 @@ body {
   z-index: 10;
 }
 
-.add {
+.check-button-confirm {
   background-color: #ade8f4 !important;
   color: #023e8a !important;
   cursor: pointer;

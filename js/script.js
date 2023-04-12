@@ -62,7 +62,7 @@ checkButton.addEventListener("click", () => {
 async function sendData(data) {
   const myData = await fetch("http://127.0.0.1:5000/", {
     method: "POST",
-    body: JSON.stringify({ name: data[0] }),
+    body: JSON.stringify({ Notes: data[0] }),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
@@ -84,7 +84,7 @@ async function receiveData() {
 
   let newArray = [];
   for (let i = 0; i < data.data.length; i++) {
-    newArray.push(allArray[0][i].name);
+    newArray.push(allArray[0][i].Notes);
   }
 
   findButton.addEventListener("click", () => {
@@ -104,12 +104,11 @@ async function receiveData() {
     content.innerHTML += `<i class="fa-sharp fa-solid fa-trash main-button me-me-0 me-2 p-2 position-absolute rounded-circle delete-button" onclick="deleteData('${data.data[i]._id}')" id='${data.data[i]._id}' style="right:4%; margin-top:1rem; z-index:2;"></i>
     <i class="fas fa-solid fa-pen-nib main-button p-2 me-me-0 me-2 rounded-circle update-button position-absolute " style="right:4%; margin-top:5rem; z-index:2;" ></i>
     <div class="rounded p-3 notes-area notes-box all-notes w-100 py-5 my-3  cursor-pointer position-relative " contenteditable="true" >
-    ${data.data[i].name}
+    ${data.data[i].Notes}
     </div>`;
   }
-  // popUpDelete.classList.add("d-none");
-  const deleteButton = document.querySelectorAll(".delete-button");
 
+  const deleteButton = document.querySelectorAll(".delete-button");
   const noteArea = document.querySelectorAll(".notes-area");
   noteArea.forEach((e) => {
     e.addEventListener("click", () => {
@@ -123,12 +122,12 @@ async function receiveData() {
     textArea.classList.add("dark-theme");
     textArea.style.zIndex = "2";
     checkButton.style.zIndex = "2";
-    textArea.classList.remove("write");
+    textArea.classList.remove("notes-box-notes");
     rejectButton.classList.remove("main-button");
     plusButton.classList.remove("main-button");
     rejectButton.classList.add("light-theme");
     plusButton.classList.add("light-theme");
-    checkButton.classList.remove("add");
+    checkButton.classList.remove("check-button-confirm");
     checkButton.classList.add("light-theme");
     noteArea.forEach((e) => {
       e.classList.remove("notes-box");
@@ -149,14 +148,14 @@ async function receiveData() {
     body.classList.add("light-theme");
     textArea.classList.add("light-theme");
     textArea.classList.remove("dark-theme");
-    textArea.classList.remove("write");
+    textArea.classList.remove("notes-box-notes");
     rejectButton.classList.remove("main-button");
     plusButton.classList.remove("main-button");
     rejectButton.classList.remove("light-theme");
     plusButton.classList.remove("light-theme");
     rejectButton.classList.add("dark-theme");
     plusButton.classList.add("dark-theme");
-    checkButton.classList.remove("add");
+    checkButton.classList.remove("check-button-confirm");
     textArea.style.zIndex = "2";
     checkButton.style.zIndex = "2";
     checkButton.classList.remove("light-theme");
@@ -180,7 +179,7 @@ async function receiveData() {
     body.classList.remove("light-theme");
     textArea.classList.remove("dark-theme");
     textArea.classList.remove("light-theme");
-    textArea.classList.add("write");
+    textArea.classList.add("notes-box-notes");
     rejectButton.classList.add("main-button");
     plusButton.classList.add("main-button");
     rejectButton.classList.remove("dark-theme");
@@ -209,12 +208,7 @@ async function receiveData() {
   updateButton.forEach((e) => {
     let text = e.nextElementSibling.textContent;
     e.addEventListener("click", () => {
-      console.log(text);
-
-      // setTimeout(() => {
       popUpUpdate.classList.remove("d-none");
-      // }, 2000);
-      console.log(e.nextElementSibling.textContent);
       updateData(text, e.nextElementSibling.textContent);
     });
     setTimeout(() => {
@@ -225,7 +219,6 @@ async function receiveData() {
 }
 
 let responseData = receiveData();
-// popUpDelete.classList.add("d-none");
 
 async function deleteData(myId) {
   setTimeout(() => {
@@ -259,7 +252,7 @@ async function deleteData(myId) {
 async function updateData(value1, value2) {
   const updateData = await fetch(`http://127.0.0.1:5000/`, {
     method: "PUT",
-    body: JSON.stringify([{ name: value1.trim() }, { name: value2.trim() }]),
+    body: JSON.stringify([{ Notes: value1.trim() }, { Notes: value2.trim() }]),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
